@@ -21,7 +21,7 @@ const LoginPage = () => {
       navigate(ROOT_PATHS.HOME)
     } catch(e) {
       console.log(e)
-      toast.error(e.message);
+      toast.error(e.response?.data?.message || e.message);
     }  
   };
 
