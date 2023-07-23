@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route } from "react-router-dom";
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import { Col, Row } from 'antd';
+import { GOOGLE_CLIENT_ID } from "./constants/environment";
+import UserProvider from "./providers/UserProvider";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import './index.css';
 
-function App() {
-  const [count, setCount] = useState(0)
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
+      <UserProvider>
+      <ToastContainer />
+      <Col>
+          <Navbar />
+          <Col style={{ marginTop: 200 }}>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+          </Col>
+        </Col>
+      </UserProvider>
+    </GoogleOAuthProvider>
+  );
 }
 
-export default App
+export default App;
